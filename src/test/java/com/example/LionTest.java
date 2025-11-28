@@ -27,18 +27,27 @@ public class LionTest {
     }
 
     @Test
-    public void testGetKittens() throws Exception {
+    public void testGetKittensReturnsCorrectValue() throws Exception {
         when(feline.getKittens()).thenReturn(3);
 
         Lion lion = new Lion("Самец", feline);
         int actualKittens = lion.getKittens();
 
         assertEquals("Количество котят должно совпадать", 3, actualKittens);
+    }
+
+    @Test
+    public void testGetKittensCallsGetKittens() throws Exception {
+        when(feline.getKittens()).thenReturn(3);
+
+        Lion lion = new Lion("Самец", feline);
+        lion.getKittens();
+
         verify(feline, times(1)).getKittens();
     }
 
     @Test
-    public void testGetFood() throws Exception {
+    public void testGetFoodReturnsCorrectList() throws Exception {
         List<String> expectedFood = List.of("Животные", "Птицы", "Рыба");
         when(feline.getFood("Хищник")).thenReturn(expectedFood);
 
@@ -46,6 +55,16 @@ public class LionTest {
         List<String> actualFood = lion.getFood();
 
         assertEquals("Еда должна совпадать с ожидаемой", expectedFood, actualFood);
+    }
+
+    @Test
+    public void testGetFoodCallsGetFoodWithPredator() throws Exception {
+        List<String> expectedFood = List.of("Животные", "Птицы", "Рыба");
+        when(feline.getFood("Хищник")).thenReturn(expectedFood);
+
+        Lion lion = new Lion("Самка", feline);
+        lion.getFood();
+
         verify(feline, times(1)).getFood("Хищник");
     }
 

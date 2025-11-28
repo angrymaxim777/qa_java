@@ -21,7 +21,7 @@ public class CatTest {
     }
 
     @Test
-    public void testGetFood() throws Exception {
+    public void testGetFoodReturnsCorrectList() throws Exception {
         List<String> expectedFood = List.of("Животные", "Птицы", "Рыба");
         when(feline.eatMeat()).thenReturn(expectedFood);
 
@@ -29,6 +29,16 @@ public class CatTest {
         List<String> actualFood = cat.getFood();
 
         assertEquals("Еда должна совпадать с ожидаемой", expectedFood, actualFood);
+    }
+
+    @Test
+    public void testGetFoodCallsEatMeat() throws Exception {
+        List<String> expectedFood = List.of("Животные", "Птицы", "Рыба");
+        when(feline.eatMeat()).thenReturn(expectedFood);
+
+        Cat cat = new Cat(feline);
+        cat.getFood();
+
         verify(feline, times(1)).eatMeat();
     }
 
@@ -44,7 +54,5 @@ public class CatTest {
         } catch (Exception e) {
             assertEquals("Ошибка получения еды", e.getMessage());
         }
-
-        verify(feline, times(1)).eatMeat();
     }
 }

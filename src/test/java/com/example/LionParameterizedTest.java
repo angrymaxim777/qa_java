@@ -25,7 +25,7 @@ public class LionParameterizedTest {
         MockitoAnnotations.openMocks(this);
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "Тестовые данные: пол = {0}, есть Грива = {1}")
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
                 {"Самец", true},
